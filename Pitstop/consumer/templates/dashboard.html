@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Live Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+        }
+        .data {
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .status {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .car-image {
+            margin: 20px auto;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>F1 Live Dashboard</h1>
+    <img src="{{ url_for('static', filename='f1_car.jpg') }}" alt="F1 Car" class="car-image">
+    <div class="data">
+        <p><strong>Speed:</strong> <span id="speed">--</span></p>
+        <p><strong>Fuel Level:</strong> <span id="fuel">--</span></p>
+        <p><strong>Tire Wear:</strong> <span id="tire">--</span></p>
+        <p class="status" id="status">Esperando datos...</p>
+    </div>    
+</body>
+<script>
+    async function fetchData() {
+      try {
+        const response = await fetch('/data');
+        const data = await response.json();
+  
+        document.getElementById("speed").textContent = data.speed;
+        document.getElementById("fuel").textContent = data.fuel_level;
+        document.getElementById("tire").textContent = data.tire_wear_rate;
+        document.getElementById("status").textContent = data.status;
+      } catch (error) {
+        console.error("❌ Error al obtener datos:", error);
+      }
+    }
+  
+    // Actualizar cada 2 segundos
+    setInterval(fetchData, 2000);
+  
+    // Cargar los datos al inicio
+    fetchData();
+</script>
+</html>

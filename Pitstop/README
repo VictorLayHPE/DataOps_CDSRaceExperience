@@ -1,0 +1,5 @@
+Este código sirve para producir desde un csv a un broker de kafka y consumir los datos enviados
+Los datos base son 1vs4.csv y para limpiarlos hay que usar el código de parse_motec_csv.py
+Una vez limpios los datos se pueden enviar a un broker de kafka usando el código de producer.py
+para utilizar broker y producer y consumer únicamente hay que levantar el docker
+Se visualiza el dashboard en http://localhost:5000
